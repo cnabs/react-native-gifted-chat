@@ -130,6 +130,7 @@ export default class MessageContainer extends React.Component {
 
   renderScrollComponent(props) {
     const invertibleScrollViewProps = this.props.invertibleScrollViewProps;
+    props.style = this.props.scrollStyle;
     return (
       <InvertibleScrollView
         {...props}
