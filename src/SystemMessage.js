@@ -1,34 +1,36 @@
-/* eslint no-use-before-define: ["error", { "variables": false }] */
+import React from "react";
+import { StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import PropTypes from "prop-types";
 
-import React from 'react';
-import { StyleSheet, Text, View, ViewPropTypes } from 'react-native';
-import PropTypes from 'prop-types';
-import Color from './Color';
-
-export default function SystemMessage({ currentMessage, containerStyle, wrapperStyle, textStyle }) {
-  return (
-    <View style={[styles.container, containerStyle]}>
-      <View style={[styles.wrapper, wrapperStyle]}>
-        <Text style={[styles.text, textStyle]}>{currentMessage.text}</Text>
+export default class SystemMessage extends React.Component {
+  render() {
+    const { currentMessage } = this.props;
+    return (
+      <View style={[styles.container, this.props.containerStyle]}>
+        <View style={[styles.wrapper, this.props.wrapperStyle]}>
+          <Text style={[styles.text, this.props.textStyle]}>
+            {currentMessage.text}
+          </Text>
+        </View>
       </View>
-    </View>
-  );
+    );
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     flex: 1,
     marginTop: 5,
     marginBottom: 10,
   },
   text: {
-    backgroundColor: Color.backgroundTransparent,
-    color: Color.defaultColor,
+    backgroundColor: "transparent",
+    color: "#b2b2b2",
     fontSize: 12,
-    fontWeight: '300',
-  },
+    fontWeight: "300"
+  }
 });
 
 SystemMessage.defaultProps = {
@@ -46,3 +48,4 @@ SystemMessage.propTypes = {
   wrapperStyle: ViewPropTypes.style,
   textStyle: Text.propTypes.style,
 };
+

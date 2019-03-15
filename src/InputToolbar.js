@@ -1,49 +1,50 @@
-/* eslint no-use-before-define: ["error", { "variables": false }] */
-
 import PropTypes from 'prop-types';
 import React from 'react';
-import { StyleSheet, View, Keyboard, ViewPropTypes, Dimensions } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Keyboard,
+  ViewPropTypes,
+  Dimensions
+} from 'react-native';
 
 import Composer from './Composer';
 import Send from './Send';
 import Actions from './Actions';
-import Color from './Color';
 
 export default class InputToolbar extends React.Component {
-
   constructor(props) {
     super(props);
 
-    this.keyboardWillShow = this.keyboardWillShow.bind(this);
-    this.keyboardWillHide = this.keyboardWillHide.bind(this);
-
     this.state = {
-      position: 'absolute',
+      position: 'absolute'
     };
   }
 
-  componentWillMount() {
-    this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
-    this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
+  componentWillMount () {
+    this.keyboardWillShowListener =
+      Keyboard.addListener('keyboardWillShow', this._keyboardWillShow);
+    this.keyboardWillHideListener =
+      Keyboard.addListener('keyboardWillHide', this._keyboardWillHide);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.keyboardWillShowListener.remove();
     this.keyboardWillHideListener.remove();
   }
 
-  keyboardWillShow() {
+  _keyboardWillShow = () => {
     this.setState({
-      position: 'relative',
+      position: 'relative'
     });
   }
 
-  keyboardWillHide() {
+  _keyboardWillHide = () => {
     this.setState({
-      position: 'absolute',
+      position: 'absolute'
     });
   }
-
+  
   renderActions() {
     if (this.props.renderActions) {
       return this.props.renderActions(this.props);
@@ -57,7 +58,7 @@ export default class InputToolbar extends React.Component {
     if (this.props.renderSend) {
       return this.props.renderSend(this.props);
     }
-    return <Send {...this.props} />;
+    return <Send {...this.props}/>;
   }
 
   renderComposer() {
@@ -65,7 +66,11 @@ export default class InputToolbar extends React.Component {
       return this.props.renderComposer(this.props);
     }
 
-    return <Composer {...this.props} />;
+    return (
+      <Composer
+        {...this.props}
+      />
+    );
   }
 
   renderAccessory() {
@@ -81,9 +86,7 @@ export default class InputToolbar extends React.Component {
 
   render() {
     return (
-      <View
-        style={[styles.container, this.props.containerStyle, { position: this.state.position }]}
-      >
+      <View style={[styles.container, this.props.containerStyle, { position: this.state.position }]}>
         <View style={[styles.primary, this.props.primaryStyle]}>
           {this.renderActions()}
           {this.renderComposer()}
@@ -93,16 +96,15 @@ export default class InputToolbar extends React.Component {
       </View>
     );
   }
-
 }
 
 const styles = StyleSheet.create({
   container: {
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: Color.defaultColor,
-    backgroundColor: Color.white,
+    borderTopColor: '#b2b2b2',
+    backgroundColor: '#FFFFFF',
     bottom: 0,
-    width: Dimensions.get('window').width,
+    width: Dimensions.get('window').width
   },
   primary: {
     flexDirection: 'row',
@@ -121,7 +123,6 @@ InputToolbar.defaultProps = {
   containerStyle: {},
   primaryStyle: {},
   accessoryStyle: {},
-  onPressActionButton: () => {},
 };
 
 InputToolbar.propTypes = {

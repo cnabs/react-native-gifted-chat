@@ -1,24 +1,24 @@
-/* eslint no-use-before-define: ["error", { "variables": false }] */
-
 import PropTypes from 'prop-types';
 import React from 'react';
-import { StyleSheet, Text, View, ViewPropTypes } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ViewPropTypes,
+} from 'react-native';
 
 import moment from 'moment';
 
-import Color from './Color';
-import { TIME_FORMAT } from './Constant';
-
-export default function Time({ position, containerStyle, currentMessage, timeFormat }, context) {
-  return (
-    <View style={[styles[position].container, containerStyle[position]]}>
-      <Text style={[styles[position].text, textStyle[position]]}>
-        {moment(currentMessage.createdAt)
-          .locale(context.getLocale())
-          .format(timeFormat)}
-      </Text>
-    </View>
-  );
+export default class Time extends React.Component {
+  render() {
+    return (
+      <View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
+        <Text style={[styles[this.props.position].text, this.props.textStyle[this.props.position]]}>
+          {moment(this.props.currentMessage.createdAt).locale(this.context.getLocale()).format(this.props.timeFormat)}
+        </Text>
+      </View>
+    );
+  }
 }
 
 const containerStyle = {
@@ -39,7 +39,7 @@ const styles = {
       ...containerStyle,
     },
     text: {
-      color: Color.timeTextColor,
+      color: '#aaa',
       ...textStyle,
     },
   }),
@@ -48,7 +48,7 @@ const styles = {
       ...containerStyle,
     },
     text: {
-      color: Color.white,
+      color: '#fff',
       ...textStyle,
     },
   }),
@@ -65,7 +65,6 @@ Time.defaultProps = {
   },
   containerStyle: {},
   textStyle: {},
-  timeFormat: TIME_FORMAT,
 };
 
 Time.propTypes = {
